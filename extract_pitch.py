@@ -6,7 +6,7 @@ from Settings import exp_dir
 # os.environ["PYTORCH_MPS_HIGH_WATERMARK_RATIO"] = "0.0"
 
 device = "cuda"
-wavPath = "%s/0_gt_wavs" % exp_dir
+wavPath = "%s/1_16k_wavs" % exp_dir
 outPath = f"{exp_dir}/3_feature"
 model=None
 os.makedirs(outPath, exist_ok=True)
