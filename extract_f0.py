@@ -33,7 +33,7 @@ class FeatureInput(object):
         for i, (inp_path, opt_path1, opt_path2) in enumerate(paths):
             try:
                 if os.path.exists(f"{opt_path1}.npy") == True and os.path.exists(f"{opt_path2}.npy") == True:continue
-                featur_pit = self.model_rmvpe.infer_from_audio(load_audio(inp_path),thred=0.03)
+                featur_pit = self.model_rmvpe.infer_from_audio(load_audio(inp_path,16000),thred=0.03)
                 np.save(opt_path2,featur_pit,allow_pickle=False)  # nsf
                 np.save(opt_path1,self.coarse_f0(featur_pit),allow_pickle=False)  # ori
                 print(f"f0ok-{i}-{opt_path1}")

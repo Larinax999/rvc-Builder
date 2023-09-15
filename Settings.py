@@ -2,7 +2,7 @@ import numpy as np,ffmpeg,os
 
 name="Name"
 sr=48000 # sample rate
-thread=8 # thread for process
+thread=12 # thread for process
 epoch=250 # target epoch
 every_epoch=25 # save every epoch
 batch_size=20 # GB
@@ -28,7 +28,7 @@ PATH=os.getcwd()
 ## needed
 # https://huggingface.co/lj1995/VoiceConversionWebUI/tree/main
 
-def load_audio(file): # https://github.com/openai/whisper/blob/main/whisper/audio.py#L26
+def load_audio(file,sr=sr): # https://github.com/openai/whisper/blob/main/whisper/audio.py#L26
     try:
         out, _ = ffmpeg.input(file,threads=0).output("-",format="f32le",acodec="pcm_f32le",ac=1,ar=sr).run(cmd=["ffmpeg","-nostdin"],capture_stdout=True,capture_stderr=True)
     except Exception as e:raise RuntimeError(f"Failed to load audio: {e}")
