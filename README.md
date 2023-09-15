@@ -11,7 +11,7 @@ fork from [kalomaze](https://github.com/kalomaze/Mangio-Kalo-Tweaks)
 # 🐱‍👤 Setup
 
 0. Can run RVC before
-1. Download `f0G48k.pth` `f0D48k.pth` `rmvpe.pt` `hubert_base.pt` from [VoiceConversionWebUI](https://huggingface.co/lj1995/VoiceConversionWebUI)
+1. Download `f0G48k.pth` `f0D48k.pth` `rmvpe.pt` `hubert_base.pt` from [VoiceConversionWebUI](https://huggingface.co/lj1995/VoiceConversionWebUI/tree/main)
 2. Move to `./bin`
 3. Remove `REMOVEME` in `datasets` `index` `logs` `weights`
 4. Done
