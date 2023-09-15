@@ -1,4 +1,4 @@
-import numpy as np, os,traceback,logging,threading
+import numpy as np, os,traceback,logging,multiprocessing
 from cors.rmvpe import RMVPE
 from Settings import thread,exp_dir,load_audio
 
@@ -36,6 +36,7 @@ class FeatureInput(object):
                 featur_pit = self.model_rmvpe.infer_from_audio(load_audio(inp_path),thred=0.03)
                 np.save(opt_path2,featur_pit,allow_pickle=False)  # nsf
                 np.save(opt_path1,self.coarse_f0(featur_pit),allow_pickle=False)  # ori
+                print(f"f0ok-{i}-{opt_path1}")
             except:
                 print(f"f0fail-{i}-{inp_path}-{traceback.format_exc()}")
 
@@ -56,7 +57,7 @@ if __name__ == "__main__":
 
     ps = []
     for i in range(thread):
-        p=threading.Thread(target=featureInput.go,args=(paths[i::thread],))
+        p=multiprocessing.Process(target=featureInput.go,args=(paths[i::thread],))
         ps.append(p)
         p.start()
     for t in ps:t.join()
