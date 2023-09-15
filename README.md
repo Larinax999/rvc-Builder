@@ -7,6 +7,7 @@ fork from [kalomaze](https://github.com/kalomaze/Mangio-Kalo-Tweaks)
 - Rework code 1-2 lines / 50-100 character 😎
 - Easy to use. only 3 step
 - No intel No AMD. Only cuda
+- default is v2, rmvpe, 48k Sample Rate
 
 # 🐱‍👤 Setup
 
