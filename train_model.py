@@ -18,7 +18,10 @@ from cors.losses import generator_loss, discriminator_loss, feature_loss, kl_los
 from cors.mel_processing import mel_spectrogram_torch, spec_to_mel_torch
 from cors.process_ckpt import savee
 from cors.infer_pack import commons
-from cors.infer_pack.models import SynthesizerTrnMs768NSFsid as RVC_Model_f0,MultiPeriodDiscriminatorV2 as MultiPeriodDiscriminator
+from cors.infer_pack.models import (
+    SynthesizerTrnMs768NSFsid as RVC_Model_f0,
+    MultiPeriodDiscriminatorV2 as MultiPeriodDiscriminator
+)
 from Settings import epoch as total_epoch,exp_dir,every_epoch,batch_size,name,PATH,num_workers
 import torch.distributed as dist
 import cors.utils
@@ -160,15 +163,14 @@ def train_and_evaluate(epoch, nets, optims, scaler, train_loader):
 def main():
     global global_step
     dist.init_process_group(backend="gloo",init_method="env://",world_size=1,rank=0)
-    torch.manual_seed(6969)
+    torch.manual_seed(1234)
     torch.cuda.set_device(0)
 
     train_dataset = TextAudioLoaderMultiNSFsid(f"{exp_dir}/filelist.txt",configs.data)
-    print(train_dataset)
     train_sampler = DistributedBucketSampler(train_dataset,batch_size,[100, 200, 300, 400, 500, 600, 700, 800, 900],num_replicas=1,rank=0,shuffle=True) # [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1200, 1400],  # 16s
     train_loader = DataLoader(train_dataset,num_workers=num_workers,shuffle=False,pin_memory=True,collate_fn=TextAudioCollateMultiNSFsid(),batch_sampler=train_sampler,persistent_workers=True,prefetch_factor=8)
 
-    net_g = RVC_Model_f0((configs.data.filter_length//2) + 1,configs.train.segment_size//configs.data.hop_length,**configs.model.__dict__,is_half=True,sr=configs.data.sampling_rate).cuda(0)
+    net_g = RVC_Model_f0(configs.data.filter_length//2 + 1,configs.train.segment_size//configs.data.hop_length,**configs.model.__dict__,is_half=True,sr=configs.data.sampling_rate).cuda(0)
     optim_g = torch.optim.AdamW(net_g.parameters(),configs.train.learning_rate,betas=configs.train.betas,eps=configs.train.eps)
 
     net_d = MultiPeriodDiscriminator(False).cuda(0)
