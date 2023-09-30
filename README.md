@@ -1,5 +1,7 @@
 # RVC Builder/Trainer
 
+**train_model.py BUG WAIT FOR UPDATE. sry**
+
 fork from [kalomaze](https://github.com/kalomaze/Mangio-Kalo-Tweaks)
 
 # ✔ Feature
